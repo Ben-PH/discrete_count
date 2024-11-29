@@ -36,7 +36,7 @@ checksum = "7a81dae078cea95a014a339291cec439d2f232ebe854a9d672b796c6afafa9b7"
 name = "discrete_count"
 version = "0.0.1"
 dependencies = [
- "discrete_count_core",
+ "discrete_count_core 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "fixed",
  "typenum",
  "uom",
@@ -45,6 +45,12 @@ dependencies = [
 [[package]]
 name = "discrete_count_core"
 version = "0.0.1"
+
+[[package]]
+name = "discrete_count_core"
+version = "0.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "15ef2eff0add68912a9fa9dfbe6effad989c1b112961d530724a9957276ae87d"
 
 [[package]]
 name = "fixed"

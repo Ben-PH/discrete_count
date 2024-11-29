@@ -7,7 +7,7 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/Ben-PH/discrete_count"
 homepage = "https://github.com/Ben-PH/discrete_count"
 keywords = ["embedded", "time", "no_std", "count"]
-catagories = ["no-std", "date-and-time", "embedded", "science::robotics", "hardware-support"]
+categories = ["no-std", "date-and-time", "embedded", "science::robotics", "hardware-support"]
 authors = ["Ben PH <benphawke@gmail.com>"]
 
 [dependencies]
