@@ -10,4 +10,12 @@ members = [
 
 [dependencies]
 discrete_count_core = { version = "0.1.0", path = "discrete_count_core" }
+fixed = { version = "1.28.0", optional = true }
+typenum = { version = "1.17.0", optional = true }
+uom = { version = "0.36.0", optional = true }
+
+[features]
+fixed = ["dep:fixed"]
+uom = ["dep:uom"]
+typenum = ["dep:typenum"]
 
