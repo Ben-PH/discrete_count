@@ -5,7 +5,7 @@ pub trait Count: Sized {
     /// Encapsulates the magnitude of what is being measured for each count.
     ///
     /// E.g.:
-    /// - `(typenum::U1, typenum::U10000)` for a 10khz oscilator. 
+    /// - `(typenum::U1, typenum::U10000)` for a 10khz oscilator.
     /// - a 1024 PPR AB encoder has tau/4096 resolution, ~= 1/652 radians:
     ///   `(typenum::U1, typenum::U652)`
     type Resolution;
@@ -19,7 +19,7 @@ pub trait Count: Sized {
     /// - Meters
     ///
     /// E.g.
-    /// ```rust
+    /// ```rust ignore
     ///
     /// // Basic, short-life 1khz resolution time-measure
     /// struct MilliSeconds(u32);
@@ -31,22 +31,22 @@ pub trait Count: Sized {
     /// //
     /// // We use Tau in its name, because we are thinking in terms of full-rotations,
     /// // and `Tau` radians is one full rotation
-    /// struct ValveTau(fixed::types::I6F12);
+    /// struct ValveTau(discrete_count::re_exports::fixed::types::I6F12);
     ///
     /// // Advanced manufacturing equipment might need rotary stages that need to track
     /// // more than 2^16 rotations, with pricesion up to 2^-16 radians.
-    /// struct RotaryStageTau(fixed::types::I16F16);
+    /// struct RotaryStageTau(discrete_count::re_exports::fixed::types::I16F16);
     ///
     /// // Encapsulate 32-bit POSIX timestamps
     /// struct Seconds(u32);
     ///
     /// // Encapsulate 64-bit POSIX timestamps
-    /// struct Seconds(u64);
+    /// struct BigSeconds(u64);
     /// ```
     type Measure;
 
     /// Derive the magnitude being measured. E.g.
-    /// ```rust
+    /// ```rust ignore
     /// let stage_rotation = Count::measure(&stage, stage.try_read_measure()?);
     /// let rotation_count = stage_rotation.int();
     /// let rotation_angle = stage_rotation.frac();
