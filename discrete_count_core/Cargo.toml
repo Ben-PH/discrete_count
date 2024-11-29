@@ -1,6 +1,13 @@
 [package]
 name = "discrete_count_core"
-version = "0.1.0"
+version = "0.0.1"
 edition = "2021"
+description = "Core implementation for discrete_count"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/Ben-PH/discrete_count"
+homepage = "https://github.com/Ben-PH/discrete_count"
+keywords = ["embedded", "time", "no_std", "count"]
+catagories = ["no-std", "date-and-time", "embedded", "science::robotics", "hardware-support"]
+authors = ["Ben PH <benphawke@gmail.com>"]
 
 [dependencies]

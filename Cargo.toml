@@ -1,18 +1,26 @@
 [package]
 name = "discrete_count"
-version = "0.1.0"
+version = "0.0.1"
 edition = "2021"
-
+description = "Encapsulate counting for clocks, ab-encoders, etc"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/Ben-PH/discrete_count"
+homepage = "https://github.com/Ben-PH/discrete_count"
+keywords = ["embedded", "time", "no_std", "count"]
+categories = ["no-std", "date-and-time", "embedded", "science::robotics", "hardware-support"]
+readme = "README.md"
+authors = ["Ben PH <benphawke@gmail.com>"]
 [workspace]
 members = [
     "discrete_count_core"
 ]
 
 [dependencies]
-discrete_count_core = { version = "0.1.0", path = "discrete_count_core" }
+discrete_count_core = { version = "0.0.1", path = "discrete_count_core" }
 fixed = { version = "1.28.0", optional = true }
 typenum = { version = "1.17.0", optional = true }
 uom = { version = "0.36.0", optional = true }
+[workspace.dependencies]
 
 [features]
 fixed = ["dep:fixed"]

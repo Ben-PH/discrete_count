@@ -1,4 +1,6 @@
 #![no_std]
+#![warn(clippy::pedantic)]
+#![allow(clippy::missing_errors_doc)]
 
 /// What is being counted, and what this count is measuring.
 pub trait Count: Sized {
@@ -34,7 +36,7 @@ pub trait Count: Sized {
     /// struct ValveTau(discrete_count::re_exports::fixed::types::I6F12);
     ///
     /// // Advanced manufacturing equipment might need rotary stages that need to track
-    /// // more than 2^16 rotations, with pricesion up to 2^-16 radians.
+    /// // up to 2^16 rotations, with pricesion up to 2^-16 radians.
     /// struct RotaryStageTau(discrete_count::re_exports::fixed::types::I16F16);
     ///
     /// // Encapsulate 32-bit POSIX timestamps
@@ -60,8 +62,15 @@ pub trait Counter: Sized {
     type CountDefinition: Count;
 
     /// Updates the internal count state.
+    /// # Errors
+    ///
+    /// If the internal count-read errors out, the implementation should return an error,
+    /// and not update the count.
     fn try_update_count(&mut self) -> Result<(), <Self::Reader as CountReader>::ReadErr>;
     /// Reads the count, applying scale to read measure.
+    /// # Errors
+    ///
+    /// If the internal count-read errors out, the implementation should return an error.
     fn try_read_measure(
         &self,
     ) -> Result<<Self::CountDefinition as Count>::Measure, <Self::Reader as CountReader>::ReadErr>;
