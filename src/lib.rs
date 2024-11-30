@@ -1,3 +1,5 @@
+#![no_std]
+
 pub use discrete_count_core::*;
 
 pub mod re_exports {
