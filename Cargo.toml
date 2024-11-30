@@ -1,6 +1,6 @@
 [package]
 name = "discrete_count"
-version = "0.0.1"
+version = "0.0.2"
 edition = "2021"
 description = "Encapsulate counting for clocks, ab-encoders, etc"
 license = "MIT OR Apache-2.0"
@@ -16,7 +16,7 @@ members = [
 ]
 
 [dependencies]
-discrete_count_core = "0.0.1"
+discrete_count_core = "0.0.2"
 fixed = { version = "1.28.0", optional = true }
 typenum = { version = "1.17.0", optional = true }
 uom = { version = "0.36.0", optional = true }

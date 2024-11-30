@@ -1,6 +1,6 @@
 [package]
 name = "discrete_count_core"
-version = "0.0.1"
+version = "0.0.2"
 edition = "2021"
 description = "Core implementation for discrete_count"
 license = "MIT OR Apache-2.0"

@@ -2,8 +2,11 @@
 #![warn(clippy::pedantic)]
 #![allow(clippy::missing_errors_doc)]
 
-/// What is being counted, and what this count is measuring.
-pub trait Count: Sized {
+#[allow(type_alias_bounds)]
+pub type CountRaw<C: Counter> = <<C as Counter>::Reader as CountReader>::RawData;
+/// Encapsulates the types and operations assosciated with a count-oriented driver.
+pub trait Counter {
+    type Reader: CountReader;
     /// Encapsulates the magnitude of what is being measured for each count.
     ///
     /// E.g.:
@@ -47,20 +50,9 @@ pub trait Count: Sized {
     /// ```
     type Measure;
 
-    /// Derive the magnitude being measured. E.g.
-    /// ```rust ignore
-    /// let stage_rotation = Count::measure(&stage, stage.try_read_measure()?);
-    /// let rotation_count = stage_rotation.int();
-    /// let rotation_angle = stage_rotation.frac();
-    /// ```
-    fn measure<R: CountReader>(&self, count: R::RawData) -> Self::Measure;
-}
 
-/// Encapsulates the types and operations assosciated with a count-oriented driver.
-pub trait Counter: Sized {
-    type Reader: CountReader;
-    type CountDefinition: Count;
-
+    fn update_count_state(&mut self, count: CountRaw<Self>) -> Result<(), <Self::Reader as CountReader>::ReadErr>;
+    fn read_count_state(&self) -> &CountRaw<Self>;
     /// Updates the internal count state.
     /// # Errors
     ///
@@ -73,14 +65,25 @@ pub trait Counter: Sized {
     /// If the internal count-read errors out, the implementation should return an error.
     fn try_read_measure(
         &self,
-    ) -> Result<<Self::CountDefinition as Count>::Measure, <Self::Reader as CountReader>::ReadErr>;
-    fn measure_count_state(&self) -> <Self::CountDefinition as Count>::Measure;
+    ) -> Result<Self::Measure, <Self::Reader as CountReader>::ReadErr>;
+    fn measure_count_state(&self) -> Self::Measure;
+    /// Derive the magnitude being measured. E.g.
+    /// ```rust ignore
+    /// let stage_rotation = Count::measure(&stage, stage.try_read_measure()?);
+    /// let rotation_count = stage_rotation.int();
+    /// let rotation_angle = stage_rotation.frac();
+    /// ```
+    fn try_update_and_measure(&mut self, count: &CountRaw<Self>) -> Result<Self::Measure, <Self::Reader as CountReader>::ReadErr>;
+    fn direct_measure() -> Result<Self::Measure, <Self::Reader as CountReader>::ReadErr> {
+        Ok(Self::measure_count(&<Self::Reader as CountReader>::read()?))
+    }
+    fn measure_count(count: &CountRaw<Self>) -> Self::Measure;
 }
 
 /// Used to interface directly with the source of a count.
 /// Typical implementation is to read directly from the relevant hardware register.
 pub trait CountReader {
     type ReadErr;
-    type RawData: Copy;
+    type RawData;
     fn read() -> Result<Self::RawData, Self::ReadErr>;
 }
