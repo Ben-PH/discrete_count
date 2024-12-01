@@ -77,8 +77,10 @@ pub trait Counter {
         &mut self,
         count: &CountRaw<Self>,
     ) -> Result<Self::Measure, <Self::Reader as CountReader>::ReadErr>;
-    fn direct_measure() -> Result<Self::Measure, <Self::Reader as CountReader>::ReadErr> {
-        Ok(Self::measure_count(&<Self::Reader as CountReader>::read()?))
+    fn direct_measure(
+        reader: &Self::Reader,
+    ) -> Result<Self::Measure, <Self::Reader as CountReader>::ReadErr> {
+        Ok(Self::measure_count(&reader.read()?))
     }
     fn measure_count(count: &CountRaw<Self>) -> Self::Measure;
 }
@@ -88,5 +90,5 @@ pub trait Counter {
 pub trait CountReader {
     type ReadErr;
     type RawData;
-    fn read() -> Result<Self::RawData, Self::ReadErr>;
+    fn read(&self) -> Result<Self::RawData, Self::ReadErr>;
 }
