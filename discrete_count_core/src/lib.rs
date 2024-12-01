@@ -50,8 +50,10 @@ pub trait Counter {
     /// ```
     type Measure;
 
-
-    fn update_count_state(&mut self, count: CountRaw<Self>) -> Result<(), <Self::Reader as CountReader>::ReadErr>;
+    fn update_count_state(
+        &mut self,
+        count: CountRaw<Self>,
+    ) -> Result<(), <Self::Reader as CountReader>::ReadErr>;
     fn read_count_state(&self) -> &CountRaw<Self>;
     /// Updates the internal count state.
     /// # Errors
@@ -63,9 +65,7 @@ pub trait Counter {
     /// # Errors
     ///
     /// If the internal count-read errors out, the implementation should return an error.
-    fn try_read_measure(
-        &self,
-    ) -> Result<Self::Measure, <Self::Reader as CountReader>::ReadErr>;
+    fn try_read_measure(&self) -> Result<Self::Measure, <Self::Reader as CountReader>::ReadErr>;
     fn measure_count_state(&self) -> Self::Measure;
     /// Derive the magnitude being measured. E.g.
     /// ```rust ignore
@@ -73,7 +73,10 @@ pub trait Counter {
     /// let rotation_count = stage_rotation.int();
     /// let rotation_angle = stage_rotation.frac();
     /// ```
-    fn try_update_and_measure(&mut self, count: &CountRaw<Self>) -> Result<Self::Measure, <Self::Reader as CountReader>::ReadErr>;
+    fn try_update_and_measure(
+        &mut self,
+        count: &CountRaw<Self>,
+    ) -> Result<Self::Measure, <Self::Reader as CountReader>::ReadErr>;
     fn direct_measure() -> Result<Self::Measure, <Self::Reader as CountReader>::ReadErr> {
         Ok(Self::measure_count(&<Self::Reader as CountReader>::read()?))
     }
